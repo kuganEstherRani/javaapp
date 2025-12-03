@@ -40,6 +40,17 @@ pipeline {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
+
+            stage('Deploy to Azure') {
+            steps {
+                withCredentials([string(credentialsId: 'clientId', variable: 'CLIENT_ID'), string(credentialsId: 'clientSecret', variable: 'CLIENT_SECRET'),string(credentialsId: 'TENANT_ID', variable: 'tenantid')]) {
+                sh '''
+                az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $tenantid
+                 '''
+                }
+               
+            }
+        }
     }
 
     post {
