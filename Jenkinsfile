@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker{
-            image 'nginx:1-alpine'
+            image 'maven:3.8.6-openjdk-17'
         }
     }
 
@@ -25,11 +25,23 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker --version'
-                
+               
+                sh 'mvn clean compile'
             }
         }
 
+       
+        stage('Package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+
+        stage('Archive Artifact') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
        
        
 
