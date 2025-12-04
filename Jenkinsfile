@@ -45,10 +45,10 @@ pipeline {
             stage('Deploy to Azure') {
             steps {
                 withCredentials([string(credentialsId: 'clientId', variable: 'CLIENT_ID'), string(credentialsId: 'clientSecret', variable: 'CLIENT_SECRET'),string(credentialsId: 'TENANT_ID', variable: 'tenantid')]) {
-                sh '''
+               /* sh '''
                 az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $tenantid
                 az webapp deploy --resource-group noteExpress_webapp --name javaappgithub --src-path target/*.jar --type jar
-                 '''
+                 '''*/
                 }
                
             }
